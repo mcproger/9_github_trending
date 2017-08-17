@@ -17,7 +17,7 @@ def get_trending_repositories(top_size, time_delta):
     max_page_count = 100
     if top_size > max_page_count:
         return None
-    week_ago_date = date.today() - timedelta(days=time_delta)
+    time_ago_date = date.today() - timedelta(days=time_delta)
     github_api_url = 'https://api.github.com/search/repositories'
     params = {
         'q': 'created:>=%s' % week_ago_date,
