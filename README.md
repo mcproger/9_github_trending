@@ -19,6 +19,15 @@ $ python3 github_trending.py <Number of repositories> <Time delta>
 ```
 
 
+# Requirements
+
+For installing requirements in directory of your project make:
+
+```
+$ pip install -r requirements.txt
+```
+
+
 # Project Goals
 
 The code is written for educational purposes. Training course for web-developers - [DEVMAN.org](https://devman.org)
