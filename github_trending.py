@@ -13,19 +13,17 @@ def get_argparser():
     return args
 
 
-def get_trending_repositories(top_size, time_delta):
+def get_trending_repositories(github_api_url, top_size, time_ago_date):
     max_page_count = 100
     if top_size > max_page_count:
         return None
-    time_ago_date = date.today() - timedelta(days=time_delta)
-    github_api_url = 'https://api.github.com/search/repositories'
     params = {
-        'q': 'created:>=%s' % week_ago_date,
+        'q': 'created:>=%s' % time_ago_date,
         'sort': 'stars',
-        'per_page': '100'
+        'per_page': top_size
     }
     response = requests.get(github_api_url, params=params).json()
-    repositories = response['items'][:top_size]
+    repositories = response['items']
     return repositories
 
 
@@ -40,6 +38,8 @@ def get_repository_info(repo_url, repo_stars, repo_issues):
 
 if __name__ == '__main__':
     args = get_argparser()
-    repositories = get_trending_repositories(args.top_size, args.time_delta)
+    github_api_url = 'https://api.github.com/search/repositories'
+    time_ago_date = date.today() - timedelta(days=args.time_delta)
+    repositories = get_trending_repositories(github_api_url, args.top_size, time_ago_date)
     for repository in repositories:
         print(get_repository_info(repository['url'], repository['stargazers_count'], repository['open_issues_count']))
